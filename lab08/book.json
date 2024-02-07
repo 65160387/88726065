@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "name": "Elon musk",
+        "author": "lol",
+        "author2": "XD",
+        "author3": "Noob",
+        "price": "200"
+    },
+    {
+        "id": 2,
+        "name": "How to be M",
+        "author": "Khanchai G",
+        "author2": "Chatmongkol",
+        "author3": "iAum",
+        "price": "200"
+    },
+    {
+        "id": 3,
+        "name": "The wok",
+        "author": "joe biden",
+        "author2": "Arnold",
+        "author3": "mewing",
+        "price": "123"
+    }
+]
