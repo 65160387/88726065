@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="style4.css">
+    <title>Lab10-4: Instant Search</title>
+    <script src="https://unpkg.com/vue@3"></script> <!-- Removed the space before URL -->
+</head>
+
+<body>
+    <div id="app" v-cloak> <!-- Changed form to div -->
+        <div class="bar">
+            <!-- Bind the model to searchString -->
+            <input type="text" v-model="searchString" placeholder="Enter your search terms" />
+        </div>
+        <ul>
+            <!-- Loop through filteredArticles -->
+            <li v-for="article in filteredArticles" :key="article.title"> <!-- Added :key -->
+                <a :href="article.url"><img :src="article.image" /></a> <!-- Changed v-bind to : -->
+                <p>{{ article.title }}</p>
+            </li>
+        </ul>
+    </div> <!-- Added missing closing tag for div -->
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    searchString: "",
+                    // Should typically be fetched via AJAX
+                    articles: [{
+                            "title": "What You Need To Know About CSS Variables",
+                            "url": "http://tutorialzine.com/2016/03/what-you-need-to-know-about-css-variables/",
+                            "image": "images/css-variables-100x100.jpg"
+                        },
+                        {
+                            "title": "Freebie: 4 Great Looking Pricing Tables",
+                            "url": "http://tutorialzine.com/2016/02/freebie-4-great-looking-pricing-tables/",
+                            "image": "images/great-looking-pricing-tables-100x100.jpg"
+                        },
+                        {
+                            "title": "20 Interesting JavaScript and CSS Libraries for February 2016",
+                            "url": "http://tutorialzine.com/2016/02/20-interesting-javascript-and-css-libraries-for-february-2016/",
+                            "image": "images/interesting-resources-february-100x100.jpg"
+                        },
+                        {
+                            "title": "Quick Tip: The Easiest Way To Make Responsive Headers",
+                            "url": "http://tutorialzine.com/2016/02/quick-tip-easiest-way-to-make-responsive-headers/",
+                            "image": "images/quick-tip-responsive-headers-100x100.png"
+                        },
+                        {
+                            "title": "Learn SQL In 20 Minutes",
+                            "url": "http://tutorialzine.com/2016/01/learn-sql-in-20-minutes/",
+                            "image": "images/learn-sql-20-minutes-100x100.png"
+                        },
+                        {
+                            "title": "Creating Your First Desktop App With HTML, JS and Electron",
+                            "url": "http://tutorialzine.com/2015/12/creating-your-first-desktop-app-with-html-js-and-electron/",
+                            "image": "images/creating-your-first-desktop-app-with-electron-100x100.png"
+                        }
+                    ]
+                };
+            },
+            computed: {
+                // Compute filtered articles based on searchString
+                filteredArticles: function () {
+                    var articles_array = this.articles,
+                        searchString = this.searchString.trim().toLowerCase();
+
+                    if (!searchString) {
+                        return articles_array;
+                    }
+
+                    return articles_array.filter(function (item) {
+                        return item.title.toLowerCase().indexOf(searchString) !== -1;
+                    });
+                }
+            }
+        });
+
+        app.mount('#app');
+    </script>
+</body>
+
+</html>

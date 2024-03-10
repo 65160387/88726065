@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Get Images</title>
+</head>
+<body>
+  
+
+<h3>Get image by my upload</h3>
+<button onclick="document.location='uploaddog.html'">อัปโหลด</button> <br> <hr>
+<div id="disp"></div> 
+
+<script>
+  const API_URL = "https://api.thedogapi.com/v1/";
+  const API_KEY =
+    "live_SfwuQOC9ZrmFcQ7j3GENmuWuyBRNq6b5Gh9UmICTLyRs8pt0MMpTpLf9KZyOa5bU";
+
+  function getMyUpload() {
+    fetch(`${API_URL}images/?limit=10&page=0&order=DESC`, {
+      method: "GET",
+      headers: {
+        "x-api-key": API_KEY,
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        let disp = document.getElementById("disp");
+        if (data.length === 0) {
+          disp.innerText = "ไม่พบรูปของท่าน";
+        } else {
+          data.forEach((element) => {
+            disp.innerHTML += `<img src="${element.url}" width="22%" title="${element.id}"/>`;
+            // link for delete image by id
+            disp.innerHTML += `<a href="#" onclick="deleteImage('${element.id}')"><img src="images/delete-24.png"></a>`;
+          });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+  getMyUpload();
+
+  function deleteImage(pid) {
+    fetch(`${API_URL}images/${pid}`, {
+      method: "DELETE",
+      headers: {
+        "x-api-key": API_KEY,
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        alert("Image deleted successfully");
+        
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+ 
+  
+</script>
+
+</body>
+</html>

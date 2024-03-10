@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue.js - Form input binding</title>
+    <script src="https://unpkg.com/vue@3.4.21/dist/vue.global.js"></script>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Form Validation Demo</h1>
+    <div id="app">
+        <!-- @submit เป็นรูปย่อของ v-on:submit -->
+        <form @submit.prevent="checkForm">
+            <p v-if="errors.name">
+                <b class="error">{{ errors.name }}</b>
+            </p>
+            <p>
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name" v-model="name">
+            </p>
+            <p v-if="errors.age">
+                <b class="error">{{ errors.age }}</b>
+            </p>
+            <p>
+                <label for="age">Age</label>
+                <input type="number" name="age" id="age" v-model="age" min="0">
+            </p>
+
+            <p v-if="errors.sex">
+                <b class="error">{{ errors.sex }}</b>
+            </p>
+            <p>
+                <label>Sex:</label>
+                <label for="male">Male</label>
+                <input type="radio" id="male" name="sex" value="male" v-model="sex">
+                <label for="female">Female</label>
+                <input type="radio" id="female" name="sex" value="female" v-model="sex">
+            </p>
+
+            <p v-if="errors.movie">
+                <b class="error">{{ errors.movie }}</b>
+            </p>
+            <p>
+                <label for="movie">Your favorite Movie</label>
+                <select name="movie" id="movie" v-model="movie">
+                    <option selected disabled>Please select</option>
+                    <option>Star Wars</option>
+                    <option>Vanilla Sky</option>
+                    <option>Atomic Blonde</option>
+                </select>
+            </p>
+            <p>
+                <!-- <button @click="checkForm">Submit</button> -->
+                <input type="submit" value="Submit">
+            </p>
+        </form>
+    </div>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    errors: {},
+                    name: null,
+                    age: null,
+                    sex: null,
+                    movie: null
+                }
+            },
+            methods: {
+                checkForm(e) {
+                    this.errors = {};
+                    if (!this.name) this.errors.name = "Name required.";
+                    if (!this.age) this.errors.age = "Age required.";
+                    if (!this.sex) this.errors.sex = "Sex required.";
+                    if (!this.movie) this.errors.movie = "Favorite Movie required.";
+
+                    if (Object.keys(this.errors).length === 0) {
+                        return true; // Form is valid
+                    }
+
+                    e.preventDefault(); // Prevent form submission if there are errors
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+
+</html>

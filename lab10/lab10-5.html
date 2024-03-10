@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="style5.css">
+    <title>Lab10-5: Switchable Grid</title>
+    <script src="https://unpkg.com/vue@3.0.11"></script> <!-- Removed /dist/vue.global.js -->
+</head>
+
+<body>
+    <div id="app" v-cloak> <!-- Changed form to div -->
+        <div class="bar">
+            <!-- Bind layout to 'list' or 'grid' -->
+            <a class="list-icon" :class="{ 'active': layout == 'list'}" @click="layout = 'list'"></a> <!-- Changed v-on to @ -->
+            <a class="grid-icon" :class="{ 'active': layout == 'grid'}" @click="layout = 'grid'"></a> <!-- Changed v-on to @ -->
+        </div>
+        <!-- Grid and List layout based on layout variable -->
+        <ul v-if="layout == 'grid'" class="grid">
+            <!-- View showing large images without text -->
+            <li v-for="a in articles" :key="a.title"> <!-- Added :key -->
+                <a :href="a.url" target="_blank"><img :src="a.image.large" /></a> <!-- Changed v-bind to : -->
+            </li>
+        </ul>
+        <ul v-if="layout == 'list'" class="list">
+            <!-- View showing small images with text -->
+            <li v-for="a in articles" :key="a.title"> <!-- Added :key -->
+                <a :href="a.url" target="_blank"><img :src="a.image.small" /></a> <!-- Changed v-bind to : -->
+                <p>{{ a.title }}</p>
+            </li>
+        </ul>
+    </div> <!-- Added missing closing tag for div -->
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    layout: 'grid', // Set initial layout mode
+                    articles: [{
+                            "title": "What You Need To Know About CSS Variables",
+                            "url": "http://tutorialzine.com/2016/03/what-you-need-to-know-about-css-variables/",
+                            "image": {
+                                "large": "images/css-variables.jpg",
+                                "small": "images/css-variables-150x150.jpg"
+                            }
+                        },
+                        {
+                            "title": "Freebie: 4 Great Looking Pricing Tables",
+                            "url": "http://tutorialzine.com/2016/02/freebie-4-great-looking-pricing-tables/",
+                            "image": {
+                                "large": "images/great-looking-pricing-tables.jpg",
+                                "small": "images/great-looking-pricing-tables-150x150.jpg"
+                            }
+                        },
+                        {
+                            "title": "20 Interesting JavaScript and CSS Libraries for February 2016",
+                            "url": "http://tutorialzine.com/2016/02/20-interesting-javascript-and-css-libraries-for-february-2016/",
+                            "image": {
+                                "large": "images/interesting-resources-february.jpg",
+                                "small": "images/interesting-resources-february-150x150.jpg"
+                            }
+                        },
+                        {
+                            "title": "Quick Tip: The Easiest Way To Make Responsive Headers",
+                            "url": "http://tutorialzine.com/2016/02/quick-tip-easiest-way-to-make-responsive-headers/",
+                            "image": {
+                                "large": "images/quick-tip-responsive-headers.png",
+                                "small": "images/quick-tip-responsive-headers-150x150.png"
+                            }
+                        },
+                        {
+                            "title": "Learn SQL In 20 Minutes",
+                            "url": "http://tutorialzine.com/2016/01/learn-sql-in-20-minutes/",
+                            "image": {
+                                "large": "images/learn-sql-20-minutes.png",
+                                "small": "images/learn-sql-20-minutes-150x150.png"
+                            }
+                        },
+                        {
+                            "title": "Creating Your First Desktop App With HTML, JS and Electron",
+                            "url": "http://tutorialzine.com/2015/12/creating-your-first-desktop-app-with-html-js-and-electron/",
+                            "image": {
+                                "large": "images/creating-your-first-desktop-app-with-electron.png",
+                                "small": "images/creating-your-first-desktop-app-with-electron-150x150.png"
+                            }
+                        }
+                    ]
+                };
+            }
+        }).mount('#app');
+    </script>
+</body>
+
+</html>
